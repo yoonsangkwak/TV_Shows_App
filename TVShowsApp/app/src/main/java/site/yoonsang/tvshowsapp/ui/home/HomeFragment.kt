@@ -3,19 +3,22 @@ package site.yoonsang.tvshowsapp.ui.home
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import site.yoonsang.tvshowsapp.R
 import site.yoonsang.tvshowsapp.ShowLoadStateAdapter
 import site.yoonsang.tvshowsapp.ShowPagingAdapter
+import site.yoonsang.tvshowsapp.data.model.Show
 import site.yoonsang.tvshowsapp.databinding.FragmentHomeBinding
 import site.yoonsang.tvshowsapp.ui.TVShowViewModel
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home), ShowPagingAdapter.OnItemClickListener {
 
     private val viewModel by viewModels<TVShowViewModel>()
 
@@ -24,7 +27,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         val binding = FragmentHomeBinding.bind(view)
 
-        val adapter = ShowPagingAdapter()
+        val adapter = ShowPagingAdapter(this)
 
         binding.apply {
             recyclerView.setHasFixedSize(true)
@@ -56,5 +59,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 binding.textViewEmpty.isVisible = false
             }
         }
+    }
+
+    override fun onItemClick(show: Show) {
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(show))
     }
 }

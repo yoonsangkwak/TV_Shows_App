@@ -36,7 +36,11 @@
         android:id="@+id/detailFragment"
         android:name="site.yoonsang.tvshowsapp.ui.detail.DetailFragment"
         android:label="Detail Show"
-        tools:layout="@layout/fragment_detail"/>
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="show"
+            app:argType="site.yoonsang.tvshowsapp.data.model.Show" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="site.yoonsang.tvshowsapp.ui.settings.SettingsFragment"
