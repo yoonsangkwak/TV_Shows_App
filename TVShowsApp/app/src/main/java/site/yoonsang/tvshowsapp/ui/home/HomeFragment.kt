@@ -21,16 +21,18 @@ import site.yoonsang.tvshowsapp.ui.TVShowViewModel
 class HomeFragment : Fragment(R.layout.fragment_home), ShowPagingAdapter.OnItemClickListener {
 
     private val viewModel by viewModels<TVShowViewModel>()
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentHomeBinding.bind(view)
+        _binding = FragmentHomeBinding.bind(view)
 
         val adapter = ShowPagingAdapter(this)
 
         binding.apply {
-            recyclerView.setHasFixedSize(true)
+            this!!.recyclerView.setHasFixedSize(true)
             recyclerView.itemAnimator = null
             recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
                 header = ShowLoadStateAdapter { adapter.retry() },
@@ -45,7 +47,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), ShowPagingAdapter.OnItemC
         }
         adapter.addLoadStateListener { loadState ->
             binding.apply {
-                progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+                this!!.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
                 recyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
                 buttonRetry.isVisible = loadState.source.refresh is LoadState.Error
                 textViewError.isVisible = loadState.source.refresh is LoadState.Error
@@ -53,15 +55,20 @@ class HomeFragment : Fragment(R.layout.fragment_home), ShowPagingAdapter.OnItemC
 
             // empty view
             if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && adapter.itemCount < 1) {
-                binding.recyclerView.isVisible = false
-                binding.textViewEmpty.isVisible = true
+                binding!!.recyclerView.isVisible = false
+                binding!!.textViewEmpty.isVisible = true
             } else {
-                binding.textViewEmpty.isVisible = false
+                binding!!.textViewEmpty.isVisible = false
             }
         }
     }
 
     override fun onItemClick(show: Show) {
         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(show))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

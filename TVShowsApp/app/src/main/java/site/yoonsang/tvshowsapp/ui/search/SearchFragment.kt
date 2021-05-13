@@ -24,12 +24,13 @@ class SearchFragment : Fragment(R.layout.fragment_search), ShowPagingAdapter.OnI
 
     private val viewModel by viewModels<TVShowViewModel>()
 
-    var binding: FragmentSearchBinding? = null
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentSearchBinding.bind(view)
+        _binding = FragmentSearchBinding.bind(view)
 
         val adapter = ShowPagingAdapter(this)
 
@@ -90,11 +91,12 @@ class SearchFragment : Fragment(R.layout.fragment_search), ShowPagingAdapter.OnI
         })
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onItemClick(show: Show) {
         findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailFragment(show))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

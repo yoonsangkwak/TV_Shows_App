@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +17,7 @@ import site.yoonsang.tvshowsapp.database.FavoriteShow
 import site.yoonsang.tvshowsapp.databinding.FragmentDetailBinding
 
 @AndroidEntryPoint
-class DetailFragment: Fragment(R.layout.fragment_detail) {
+class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private val viewModel by viewModels<DetailViewModel>()
 
@@ -37,6 +38,11 @@ class DetailFragment: Fragment(R.layout.fragment_detail) {
             detailTextStatus.text = show.status
             Glide.with(binding!!.root)
                 .load(show.image_thumbnail_path)
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.loading_animation)
+                        .error(R.drawable.ic_broken_image)
+                )
                 .into(detailImageView)
 
             var _isChecked = false

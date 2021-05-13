@@ -7,6 +7,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import site.yoonsang.tvshowsapp.data.model.Show
 import site.yoonsang.tvshowsapp.databinding.ShowItemBinding
 
@@ -30,6 +31,11 @@ class ShowPagingAdapter(private val listener: ShowPagingAdapter.OnItemClickListe
                 textStatus.text = show.status
                 Glide.with(itemView)
                     .load(show.image_thumbnail_path)
+                    .apply(
+                        RequestOptions()
+                            .placeholder(R.drawable.loading_animation)
+                            .error(R.drawable.ic_broken_image)
+                    )
                     .into(imageView)
             }
         }

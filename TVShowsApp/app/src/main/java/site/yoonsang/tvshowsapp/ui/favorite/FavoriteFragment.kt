@@ -20,11 +20,13 @@ import site.yoonsang.tvshowsapp.databinding.FragmentFavoriteBinding
 class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
 
     private val viewModel by viewModels<FavoriteViewModel>()
+    private var _binding: FragmentFavoriteBinding? = null
+    private val binding get() = _binding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentFavoriteBinding.bind(view)
+        _binding = FragmentFavoriteBinding.bind(view)
 
         val adapter = FavoriteAdapter(FavoriteAdapter.ShowClickListener { favoriteShow ->
             val show = Show(
@@ -43,7 +45,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
         })
 
         binding.apply {
-            favoriteList.setHasFixedSize(true)
+            this!!.favoriteList.setHasFixedSize(true)
             favoriteList.adapter = adapter
         }
 
@@ -68,14 +70,14 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
                 val show = adapter.currentList[position]
                 viewModel.delete(show)
 
-                Snackbar.make(binding.root, "deleted!", Snackbar.LENGTH_LONG).apply {
+                Snackbar.make(binding!!.root, "deleted!", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo") {
                         viewModel.insert(show)
                     }
                     show()
                 }
             }
-        }).attachToRecyclerView(binding.favoriteList)
+        }).attachToRecyclerView(binding!!.favoriteList)
 
         setHasOptionsMenu(true)
     }
@@ -90,5 +92,10 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
             R.id.action_delete_all -> viewModel.deleteAll()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
