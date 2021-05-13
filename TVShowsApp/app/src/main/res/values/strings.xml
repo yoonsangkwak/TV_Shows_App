@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">TV Shows App</string>
+
+    <string name="theme">Theme</string>
+    <string name="theme_preferences_key">theme_preferences_key</string>
+
+    <string name="light_theme_preference_value">0</string>
+    <string name="dark_theme_preference_value">1</string>
+    <string name="system_theme_preference_value">2</string>
+
+    <string name="light_theme_description">Light Mode</string>
+    <string name="dark_theme_description">Dark Mode</string>
+    <string name="system_theme_description">System default</string>
 </resources>
