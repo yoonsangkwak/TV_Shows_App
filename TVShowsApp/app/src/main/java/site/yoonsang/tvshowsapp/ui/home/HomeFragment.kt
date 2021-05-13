@@ -3,10 +3,14 @@ package site.yoonsang.tvshowsapp.ui.home
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import site.yoonsang.tvshowsapp.R
+import site.yoonsang.tvshowsapp.ShowLoadStateAdapter
+import site.yoonsang.tvshowsapp.ShowPagingAdapter
 import site.yoonsang.tvshowsapp.databinding.FragmentHomeBinding
 import site.yoonsang.tvshowsapp.ui.TVShowViewModel
 
@@ -20,8 +24,37 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         val binding = FragmentHomeBinding.bind(view)
 
+        val adapter = ShowPagingAdapter()
+
+        binding.apply {
+            recyclerView.setHasFixedSize(true)
+            recyclerView.itemAnimator = null
+            recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
+                header = ShowLoadStateAdapter { adapter.retry() },
+                footer = ShowLoadStateAdapter { adapter.retry() }
+            )
+            buttonRetry.setOnClickListener {
+                adapter.retry()
+            }
+        }
         viewModel.mostPopularShows.observe(viewLifecycleOwner) { data ->
-            Log.d("tag", "onViewCreated: " + data)
+            adapter.submitData(viewLifecycleOwner.lifecycle, data)
+        }
+        adapter.addLoadStateListener { loadState ->
+            binding.apply {
+                progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+                recyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
+                buttonRetry.isVisible = loadState.source.refresh is LoadState.Error
+                textViewError.isVisible = loadState.source.refresh is LoadState.Error
+            }
+
+            // empty view
+            if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && adapter.itemCount < 1) {
+                binding.recyclerView.isVisible = false
+                binding.textViewEmpty.isVisible = true
+            } else {
+                binding.textViewEmpty.isVisible = false
+            }
         }
     }
 }
