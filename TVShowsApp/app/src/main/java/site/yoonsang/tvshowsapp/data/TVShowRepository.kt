@@ -20,4 +20,15 @@ class TVShowRepository @Inject constructor(private val tvApi: TVApi) {
                 TVShowPagingSource(tvApi)
             }
         ).liveData
+
+    fun getSearchShows(query: String) =
+        Pager(
+            config = PagingConfig(
+                pageSize = 5,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                TVSearchPagingSource(tvApi, query)
+            }
+        ).liveData
 }
