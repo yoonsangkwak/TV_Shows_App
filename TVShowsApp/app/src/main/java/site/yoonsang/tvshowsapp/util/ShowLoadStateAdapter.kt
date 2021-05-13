@@ -1,4 +1,4 @@
-package site.yoonsang.tvshowsapp
+package site.yoonsang.tvshowsapp.util
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

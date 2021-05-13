@@ -3,7 +3,6 @@ package site.yoonsang.tvshowsapp.ui.search
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
@@ -13,8 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import site.yoonsang.tvshowsapp.R
-import site.yoonsang.tvshowsapp.ShowLoadStateAdapter
-import site.yoonsang.tvshowsapp.ShowPagingAdapter
+import site.yoonsang.tvshowsapp.util.ShowLoadStateAdapter
+import site.yoonsang.tvshowsapp.util.ShowPagingAdapter
 import site.yoonsang.tvshowsapp.data.model.Show
 import site.yoonsang.tvshowsapp.databinding.FragmentSearchBinding
 import site.yoonsang.tvshowsapp.ui.TVShowViewModel

@@ -1,9 +1,7 @@
 package site.yoonsang.tvshowsapp.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.AdapterView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import site.yoonsang.tvshowsapp.R
-import site.yoonsang.tvshowsapp.ShowLoadStateAdapter
-import site.yoonsang.tvshowsapp.ShowPagingAdapter
+import site.yoonsang.tvshowsapp.util.ShowLoadStateAdapter
+import site.yoonsang.tvshowsapp.util.ShowPagingAdapter
 import site.yoonsang.tvshowsapp.data.model.Show
 import site.yoonsang.tvshowsapp.databinding.FragmentHomeBinding
 import site.yoonsang.tvshowsapp.ui.TVShowViewModel

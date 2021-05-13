@@ -1,4 +1,4 @@
-package site.yoonsang.tvshowsapp
+package site.yoonsang.tvshowsapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import site.yoonsang.tvshowsapp.R
 import site.yoonsang.tvshowsapp.databinding.ActivityMainBinding
 
 @AndroidEntryPoint

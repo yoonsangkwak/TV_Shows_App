@@ -1,17 +1,19 @@
-package site.yoonsang.tvshowsapp
+package site.yoonsang.tvshowsapp.util
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import site.yoonsang.tvshowsapp.R
 import site.yoonsang.tvshowsapp.data.model.Show
 import site.yoonsang.tvshowsapp.databinding.ShowItemBinding
 
-class ShowPagingAdapter(private val listener: ShowPagingAdapter.OnItemClickListener): PagingDataAdapter<Show, ShowPagingAdapter.ShowViewHolder>(SHOW_COMPARATOR) {
+class ShowPagingAdapter(private val listener: OnItemClickListener): PagingDataAdapter<Show, ShowPagingAdapter.ShowViewHolder>(
+    SHOW_COMPARATOR
+) {
 
     companion object {
         private val SHOW_COMPARATOR = object : DiffUtil.ItemCallback<Show>() {
